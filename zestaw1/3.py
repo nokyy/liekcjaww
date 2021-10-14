@@ -1,0 +1,5 @@
+print('{:>10}'.format('test1'))
+print('{:10.5}'.format('teeeeeeeest2'))
+print('{:f}'.format(3.1232131231231321))
+print('{:06.2f}'.format(12.31231233333))
+print('{:_<10}'.format('test2232'))
