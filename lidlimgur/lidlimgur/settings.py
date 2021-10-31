@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lidlguru.apps.LidlguruConfig'
+    'lidlguru.apps.LidlguruConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
