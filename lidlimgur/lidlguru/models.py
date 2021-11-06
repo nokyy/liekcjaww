@@ -46,10 +46,10 @@ class Comment(m.Model):
     content = m.TextField()
     Post = m.ForeignKey(Post, on_delete=m.CASCADE)
     author = m.ForeignKey(CustomUser, on_delete=m.DO_NOTHING)
-    date = m.DateTimeField()
+    date = m.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f'{self.author}: {self.content}'
+        return f'{self.author}: {self.content} ({self.Post})'
 
 
 class Answer(m.Model):
@@ -58,4 +58,4 @@ class Answer(m.Model):
     author = m.ForeignKey(CustomUser, on_delete=m.DO_NOTHING)
 
     def __str__(self) -> str:
-        return f'{self.author}: {self.content}'
+        return f'{self.author}: {self.content} ({self.comment})'

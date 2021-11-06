@@ -22,6 +22,8 @@ from lidlguru import views
 
 router = routers.DefaultRouter()
 router.register(r'post', views.ImagesViewSet)
+router.register(r'comment', views.CommentViewSet)
+router.register(r'answer', views.AnswerToCommentViewSet)
 
 
 urlpatterns = [
