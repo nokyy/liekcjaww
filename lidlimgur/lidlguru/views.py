@@ -1,7 +1,9 @@
+from django_filters import DateTimeFilter, FilterSet
 from rest_framework import permissions, viewsets
+
 from .models import Answer, Comment, Post
-from .serializers import AnswerToCommentSerializer, CommentSerializer, SerializeTHIS
-from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter, FilterSet
+from .serializers import (AnswerToCommentSerializer, CommentSerializer,
+                          SerializeTHIS)
 
 # Create your views here.
 
@@ -14,6 +16,7 @@ class DateFilterPost(FilterSet):
         model = Post
         fields = ['from_date', 'to_date', 'categories']
 
+
 class DateFilterComment(FilterSet):
     from_date = DateTimeFilter(field_name='date', lookup_expr='gte')
     to_date = DateTimeFilter(field_name='date', lookup_expr='lte')
@@ -21,6 +24,7 @@ class DateFilterComment(FilterSet):
     class Meta:
         model = Comment
         fields = ['from_date', 'to_date']
+
 
 class ImagesViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-date')
@@ -48,6 +52,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
 
 class AnswerToCommentViewSet(viewsets.ModelViewSet):
     queryset = Answer.objects.all().order_by('-comment')

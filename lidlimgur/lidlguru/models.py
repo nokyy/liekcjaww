@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models as m
 
-
 # Create your models here.
+
 
 class CustomUserManager(UserManager):
     def get_queryset(self):
