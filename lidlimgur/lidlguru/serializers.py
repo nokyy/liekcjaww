@@ -32,7 +32,7 @@ class SerializeTHIS(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["title", "content", "photo", "categories", "author"]
+        fields = ['id', "title", "content", "photo", "categories", "author"]
 
     def create(self, validated_data):
         author = validated_data["author"]
@@ -40,9 +40,8 @@ class SerializeTHIS(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-
     author = AuthorSerializer(read_only=True)
-    Post = serializers.SlugRelatedField(queryset=Post.objects.all(), slug_field="title")
+    Post = serializers.SlugRelatedField(queryset=Post.objects.all(), slug_field='title')
 
     class Meta:
         model = Comment
@@ -54,7 +53,6 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class AnswerToCommentSerializer(serializers.ModelSerializer):
-
     author = AuthorSerializer(read_only=True)
     comment = serializers.SlugRelatedField(
         queryset=Comment.objects.all(), slug_field="content"

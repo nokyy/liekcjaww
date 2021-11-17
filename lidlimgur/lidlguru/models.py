@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models as m
 
 # Create your models here.
+from django.db.models import Manager
 
 
 class CustomUserManager(UserManager):
@@ -25,6 +26,8 @@ class Category(m.Model):
     name = m.CharField(unique=True, blank=False, null=False, max_length=100)
     description = m.TextField(unique=True, blank=False, null=False)
 
+    objects = Manager
+
     def __str__(self) -> str:
         return self.name
 
@@ -38,6 +41,8 @@ class Post(m.Model):
     date = m.DateTimeField(auto_now_add=True)
     categories = m.ManyToManyField(Category)
 
+    objects = Manager
+
     def __str__(self) -> str:
         return self.title
 
@@ -48,6 +53,8 @@ class Comment(m.Model):
     author = m.ForeignKey(CustomUser, on_delete=m.DO_NOTHING)
     date = m.DateTimeField(auto_now_add=True)
 
+    objects = Manager
+
     def __str__(self) -> str:
         return f"{self.author}: {self.content} ({self.Post})"
 
@@ -56,6 +63,8 @@ class Answer(m.Model):
     content = m.TextField()
     comment = m.ForeignKey(Comment, on_delete=m.CASCADE)
     author = m.ForeignKey(CustomUser, on_delete=m.DO_NOTHING)
+
+    objects = Manager
 
     def __str__(self) -> str:
         return f"{self.author}: {self.content} ({self.comment})"
