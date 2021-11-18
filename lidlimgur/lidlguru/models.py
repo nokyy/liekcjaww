@@ -10,6 +10,11 @@ class CustomUserManager(UserManager):
         return super().get_queryset().filter(banned=False)
 
 
+class CustomUserManagerBanned(UserManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(banned=True)
+
+
 class CustomUser(AbstractUser, CustomUserManager):
     avatar = m.ImageField(
         blank=True,
@@ -17,9 +22,12 @@ class CustomUser(AbstractUser, CustomUserManager):
     )
     banned = m.BooleanField(default=False)
     objects = CustomUserManager()
+    banned_manager = CustomUserManagerBanned()
+    normal_manager = UserManager()
 
     def delete(self, *args, **kwargs):
         self.banned = True
+        self.save()
 
 
 class Category(m.Model):
