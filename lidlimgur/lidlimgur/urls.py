@@ -24,10 +24,12 @@ router = routers.DefaultRouter()
 router.register(r'post', views.ImagesViewSet)
 router.register(r'comment', views.CommentViewSet)
 router.register(r'answer', views.AnswerToCommentViewSet)
-
+router.register(r'user', views.CustomUserViewSet)
+router.register(r'category', views.CategoryViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+                  path('', include(router.urls)),
+                  path('admin/', admin.site.urls),
+                  path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(
+    settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,8 +1,10 @@
 from django_filters import DateTimeFilter, FilterSet
 from rest_framework import permissions, viewsets
 
-from .models import Answer, Comment, Post
-from .serializers import AnswerToCommentSerializer, CommentSerializer, SerializeTHIS
+from .models import Answer, Category, Comment, CustomUser, Post
+from .serializers import (AnswerToCommentSerializer, CategorySerializer,
+                          CommentSerializer, CustomUserSerializer,
+                          SerializeTHIS)
 
 # Create your views here.
 
@@ -63,3 +65,15 @@ class AnswerToCommentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+
+class CustomUserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [permissions.IsAuthenticated]

@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from rest_framework import serializers
 
-from .models import Answer, Category, Comment, Post
+from .models import Answer, Category, Comment, CustomUser, Post
 
 
 class AuthorSerializer(serializers.ModelSerializer):
@@ -13,18 +15,13 @@ class AuthorSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["name"]
+        fields = ["name", "description"]
 
     def to_representation(self, instance):
         return instance.name
 
 
 class SerializeTHIS(serializers.ModelSerializer):
-    # Zakomentuj categories jak chcesz dodać post za pomocą html XD
-    # odkomentuj jak chcesz widzieś w get jsonie nazwę kategorii zamiast pk_id
-    # categories = CategorySerializer(many=True)
-    # Odkryłem piękną rzecz zwaną slug related field
-    # all hail slug related field
     categories = serializers.SlugRelatedField(
         queryset=Category.objects.all(), slug_field="name", many=True
     )
@@ -65,3 +62,9 @@ class AnswerToCommentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         author = validated_data["author"]
         return super().create(validated_data)
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'avatar']

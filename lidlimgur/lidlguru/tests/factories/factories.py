@@ -1,22 +1,25 @@
 import factory
 import factory.fuzzy
 from faker import Faker
+
 fake = Faker()
-from lidlguru.models import CustomUser, Post, Category, Comment, Answer
 from django.core.files.base import ContentFile
+from lidlguru.models import Answer, Category, Comment, CustomUser, Post
+
 
 class CustomUserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = CustomUser
 
     username = factory.Sequence(lambda n: f'Username {n}')
-    password = factory.PostGenerationMethodCall('set_password','Haslo123')
+    password = factory.PostGenerationMethodCall('set_password', 'Haslo123')
     banned = False
     avatar = None
 
     is_superuser = False
     is_staff = False
     is_active = True
+
 
 class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -25,19 +28,20 @@ class CategoryFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: f'Category{n}')
     description = factory.Sequence(lambda n: f'Description{n}')
 
+
 class PostFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Post
 
-    title = factory.Sequence(lambda n:f'Title {n}')
-    content = factory.Sequence(lambda n:f'Content {n}')
+    title = factory.Sequence(lambda n: f'Title {n}')
+    content = factory.Sequence(lambda n: f'Content {n}')
     photo = factory.LazyAttribute(
-            lambda _: ContentFile(
-                factory.django.ImageField()._make_data(
-                    {'width': 1024, 'height': 768}
-                ), 'example.jpg'
-            )
+        lambda _: ContentFile(
+            factory.django.ImageField()._make_data(
+                {'width': 1024, 'height': 768}
+            ), 'example.jpg'
         )
+    )
     author = factory.SubFactory(CustomUserFactory)
     download = 0
     date = fake.date()
