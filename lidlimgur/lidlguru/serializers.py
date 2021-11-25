@@ -1,6 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
 from rest_framework import serializers
 
 from .models import Answer, Category, Comment, CustomUser, Post
@@ -21,7 +19,7 @@ class CategorySerializer(serializers.ModelSerializer):
         return instance.name
 
 
-class SerializeTHIS(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
     categories = serializers.SlugRelatedField(
         queryset=Category.objects.all(), slug_field="name", many=True
     )

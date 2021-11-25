@@ -4,7 +4,7 @@ from rest_framework import permissions, viewsets
 from .models import Answer, Category, Comment, CustomUser, Post
 from .serializers import (AnswerToCommentSerializer, CategorySerializer,
                           CommentSerializer, CustomUserSerializer,
-                          SerializeTHIS)
+                          PostSerializer)
 
 # Create your views here.
 
@@ -29,7 +29,7 @@ class DateFilterComment(FilterSet):
 
 class ImagesViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by("-date")
-    serializer_class = SerializeTHIS
+    serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     # filterset_fields = ['date', 'categories']
